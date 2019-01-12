@@ -30,13 +30,13 @@
         <option v-for="author in authors">{{ author }}</option>
       </select>
 
-      <button v-on:click.prevent="postBlog">添加博客</button>
+      <button v-on:click.prevent="postBlog">编辑博客</button>
 
     </form>
 
 
     <div v-if="submited">
-      <h2>博客添加成功！！！</h2>
+      <h2>博客编辑成功！！！</h2>
     </div>
 
 
@@ -61,42 +61,40 @@
   </div>
 </template>
 
-
-
 <script>
-
-import axios from 'axios'
-
 export default {
   name: 'add-blog',
   data(){
     return {
-      blog: {
-        title: '',
-        content: '',
-        categories: [],
-        author: ''
-      },
+      id: this.$route.params.id,
+      blog: {},
       authors: ["WinSky", "AiDi", 'Sunny'],
       submited: false
     }
   },
   methods: {
+    fetchData(){
+      // console.log(this.id)
+
+      this.$http.get('https://wd7402399019lhwiwb.wilddogio.com/posts/' + this.id + '.json')
+      .then(res => {
+        // console.log(res)
+        this.blog = res.body
+      })
+      
+    },
     postBlog(){
-      this.submited = true;
-
-      // this.$http.post("https://wd7402399019lhwiwb.wilddogio.com/posts.json", this.blog)
-
-
-      //使用axios替换VueResource
-      axios.post("https://wd7402399019lhwiwb.wilddogio.com/posts.json", this.blog)
-
-      .then((data) => {
+      this.$http.put('https://wd7402399019lhwiwb.wilddogio.com/posts/' + this.id + '.json', this.blog)
+      .then(function (data){
         this.submited = true;
-        // console.log(this)
+        // console.log(data.body)
+        
       })
 
     }
+  },
+  created(){
+    this.fetchData()
   }
 }
 </script>

@@ -16,6 +16,9 @@
 </template>
 
 <script>
+
+import axios from 'axios'
+
 export default {
   name: "show-blogs",
   data() {
@@ -25,13 +28,19 @@ export default {
     };
   },
   created() {
-    this.$http.get("https://wd7402399019lhwiwb.wilddogio.com/posts.json")
-    .then(data => {
-      // this.blogs = data.body.slice(0, 10);
-      // console.log(data.json())
 
+    // this.$http.get("https://wd7402399019lhwiwb.wilddogio.com/posts.json")
+
+    axios.get("https://wd7402399019lhwiwb.wilddogio.com/posts.json")
+
+    .then(res => {
+      
       //=========返回一个Promise对象===============
-      return data.json();
+      // return data.json();
+
+      // console.log(data)
+      return res.data
+
     })
     .then(data => {
       let blogsArray = [];
@@ -47,7 +56,7 @@ export default {
 
 
         this.blogs = blogsArray;   
-        console.log(this.blogs)
+        // console.log(this.blogs)
 
 
     })
