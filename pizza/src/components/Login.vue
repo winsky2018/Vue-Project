@@ -11,6 +11,7 @@
                 type="email"
                 class="form-control"
                 v-model="email"
+                required='required'
                 >
             </div>
             <div class="form-group">
@@ -19,6 +20,7 @@
                 type="password"
                 class="form-control"
                 v-model="password"
+                required='required'
                 >
             </div>
           
@@ -49,7 +51,7 @@ export default {
     onSubmit(){
       axios.get('/users.json')
             .then(res => {
-              // console.log(res.data)
+              console.log(res.data)
               const data = res.data
               const users = []
               for(let i in data){
@@ -60,6 +62,8 @@ export default {
               let currentUser = users.filter((user) => {
                 return user.email === this.email && user.password === this.password;
               })
+
+              console.log(currentUser)
 
               //判断currentUser的长度是否为0，并进行跳转
               if(currentUser !== null && currentUser.length > 0){

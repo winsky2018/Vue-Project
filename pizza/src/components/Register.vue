@@ -11,6 +11,7 @@
                 type="email"
                 class="form-control"
                 v-model="email"
+                required='required'
                 >
             </div>
             <div class="form-group">
@@ -19,6 +20,7 @@
                 type="password"
                 class="form-control"
                 v-model="password"
+                required='required'
                 >
             </div>
             <div class="form-group">
@@ -27,6 +29,7 @@
                 type="password"
                 class="form-control"
                 v-model="confirmPassword"
+                required='required'
                 >
             </div>
             <button class="btn btn-block btn-success" type="submit">注册</button>
@@ -51,7 +54,7 @@ export default {
   },
   methods: {
     onSubmit(){
-      if(this.password === this.confirmPassword){
+      if(this.password === this.confirmPassword && this.password.trim() !== ''){
         const formData = {
           email: this.email,
           password: this.password,
@@ -66,7 +69,7 @@ export default {
                 throw new Error('注册失败！！！')
               })
       }else{
-        alert('两次密码不一致！！！')
+        alert('两次密码需要一致，且不能为空！！！')
       }
     }
   }
